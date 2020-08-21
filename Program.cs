@@ -10,59 +10,25 @@ namespace Exercicios_arrays_2
         static void Main(string[] args)
         {
             // MENU PRINCIPAL DOS EXERCÍCIOS
-            var mainOption = "";
-                       
-            while (mainOption != "0")
+
+            var exercises = new List<Action>()
             {
-                System.Console.WriteLine("*** MENU PRINCIPAL ***");
-                System.Console.WriteLine("Digite um número de 1 a 9 para escolher o exercício. Digite 0 para sair.");
-                mainOption = System.Console.ReadLine();
-                
-                if (mainOption == "1")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 1\n");
-                    exercicio1();
-                }
-                if (mainOption == "2")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 2\n");
-                    exercicio2();
-                }
-                if (mainOption == "3")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 3\n");
-                    exercicio3();
-                }
-                if (mainOption == "4")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 4\n");
-                    exercicio4();
-                }
-                if (mainOption == "5")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 5\n");
-                    exercicio5();
-                }
-                if (mainOption == "6")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 6\n");
-                    exercicio6();
-                }
-                if (mainOption == "7")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 7\n");
-                    exercicio7();
-                }
-                if (mainOption == "8")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 8\n");
-                    exercicio8();
-                }
-                if (mainOption == "9")
-                {
-                    System.Console.WriteLine("Selecionado o exercício 9\n");
-                    exercicio9();
-                }
+                exercicio1,
+                exercicio2,
+                exercicio3,
+                exercicio4,
+                exercicio5,
+                exercicio6,
+                exercicio7,
+                exercicio8,
+                exercicio9,
+            };
+
+            Console.Write("Escolha entre os exercícios 1 a 9: ");
+            
+            var input = Int32.Parse(Console.ReadLine());
+            exercises[input-1]();
+
 
 
                 static void exercicio1()
@@ -74,12 +40,15 @@ namespace Exercicios_arrays_2
 
                     for (int i = 0; i < 10; i++)
                     {
+                        Console.Write($"Digite o {i+1}º número da lista A: ");
+                        var inputA = Console.ReadLine();
+                        Console.Write($"Digite o {i+1}º número da lista B: ");
+                        var inputB = Console.ReadLine();
+
                         try
                         {
-                        Console.Write($"Digite o {i+1}º número da lista A: ");
-                        listA[i] = Int32.Parse(Console.ReadLine());
-                        Console.Write($"Digite o {i+1}º número da lista B: ");
-                        listB[i] = Int32.Parse(Console.ReadLine());
+                            listA[i] = Int32.Parse(inputA);
+                            listB[i] = Int32.Parse(inputB);
                         }
                         catch (System.Exception)
                         {
@@ -129,15 +98,16 @@ namespace Exercicios_arrays_2
                 {
                     System.Console.WriteLine("2. Dado um vetor qualquer com 10 números, faça um programa que informa se há ou não números repetidos nesse vetor.");
                     var list = new int[10];
-
+                    var input = "";
 
                     for (int i = 0; i < 10; i++)
                     {
+                        Console.Write($"Insira o {i+1}° número do vetor: ");
+                        input = Console.ReadLine();
                         try
-                            {
-                            Console.Write($"Insira o {i+1}° número do vetor: ");
-                            list[i] = Int32.Parse(Console.ReadLine());
-                            }
+                        {
+                            list[i] = Int32.Parse(input);
+                        }
                         catch (System.Exception)
                         {
                             System.Console.WriteLine("Erro. Um item inválido foi inserido. Insira um número inteiro.");
@@ -186,39 +156,61 @@ namespace Exercicios_arrays_2
                     double maleTotalCount = 0.0;
                     double femalePercent = 0.0;
                     double malePercent = 0.0;
+                    var inputGender = "";
+                    var inputAnswer = "";
 
-                    for (int i = 0; i < research.Length; i++)
+                    for (int i = 0; i < 10; i++)
                     {                   
-                        Console.Write($"Informe o seu gênero (F ou M): ");
-                        research[i].gender = Console.ReadLine().ToUpper();
-                        Console.Write($"Você gostou do produto testado (S ou N)? ");
-                        research[i].answer = Console.ReadLine().ToUpper();
+                        while (true)
+                        {
+                            Console.Write($"{i+1}/10 - Informe o seu gênero (F ou M): ");
+                            inputGender = Console.ReadLine().ToUpper();
+
+                            if (inputGender == "F" || inputGender == "M")
+                            {
+                                research[i].gender = inputGender;
+                                break;
+                            }
+                        }
+
+                        while (true)
+                        {
+                            Console.Write($"{i+1}/10 - Você gostou do produto testado (S ou N): ");
+                            inputAnswer = Console.ReadLine().ToUpper();
+
+                            if (inputAnswer == "S" || inputAnswer == "N")
+                            {
+                                research[i].answer = inputAnswer;
+                                break;
+                            }
+                        }
+
                     }
 
-                    for (int i = 0; i < research.Length; i++)
+                    foreach (var item in research)
                     {
-                        if (research[i].answer == "S")
+                        if (item.answer == "S")
                         {
                             positiveAnswer++;
-                            if (research[i].gender == "F")
+                            if (item.gender == "F")
                             {
                                 femalePositiveCount++;
                                 femaleTotalCount++;
                             }
-                            else if (research[i].gender == "M")
+                            else if (item.gender == "M")
                             {
                                 maleTotalCount++;
                             }
                         }
-                        else if (research[i].answer == "N")
+                        else if (item.answer == "N")
                         {
                             negativeAanswer++;
-                            if (research[i].gender == "M")
+                            if (item.gender == "M")
                             {
                                 maleNegativeCount++;
                                 maleTotalCount++;
                             }
-                            else if (research[i].gender == "F")
+                            else if (item.gender == "F")
                             {
                                 femaleTotalCount++;
                             }
@@ -241,24 +233,25 @@ namespace Exercicios_arrays_2
                     System.Console.WriteLine("4. Efetue a leitura de cinco elementos de uma matriz A do tipo vetor e Apresente a soma de todos os elementos que sejam impares.");
                     var a = new int[5];
                     int sumOddNumbers = 0;
+                    var input = "";
 
                     for (int i = 0; i < 5; i++)
                     {
+                        Console.Write($"Insira o número {i+1}/5: ");
+                        input = Console.ReadLine();
                         try
                         {
-                            Console.Write("Insira um número: ");
-                            a[i] = Int32.Parse(Console.ReadLine());
-                            if (a[i] % 2 != 0)
-                            {
-                                sumOddNumbers += a[i];
-                            }
+                            a[i] = Int32.Parse(input);
                         }
                         catch (System.Exception)
                         {
                             System.Console.WriteLine("Erro. Um item inválido foi inserido. Insira um número inteiro.");
                             i--;
                         }
-                        
+                        if (a[i] % 2 != 0)
+                            {
+                                sumOddNumbers += a[i];
+                            }
                     }
                     System.Console.WriteLine($"\nA soma dos números ímpares do Vetor é {sumOddNumbers}.\n");
                 }
@@ -270,13 +263,15 @@ namespace Exercicios_arrays_2
                     System.Console.WriteLine("5. Contar quantos valores de um vetor de 10 posições são positivos.");
                     var array = new int[10];
                     int evenNumbersCount = 0;
+                    var input = "";
 
                     for (int i = 0; i < 10; i++)
                     {
+                        Console.Write($"Insira o número {i+1}/10: ");
+                        input = Console.ReadLine();
                         try
                         {
-                            Console.Write($"Insira o número {i+1}/10: ");
-                            array[i] = Int32.Parse(Console.ReadLine());
+                            array[i] = Int32.Parse(input);
                             if (array[i] % 2 == 0 && array[i] > 0)
                             {
                                 evenNumbersCount++;
@@ -286,7 +281,7 @@ namespace Exercicios_arrays_2
                         {
                             System.Console.WriteLine("Erro. Um item inválido foi inserido. Insira um número inteiro.");
                             i--;
-                        }                        
+                        }
                     }
                     System.Console.WriteLine($"\nHá {evenNumbersCount} números pares no Vetor.\n");
                 }
@@ -302,10 +297,11 @@ namespace Exercicios_arrays_2
 
                     for (int i = 0; i < array.Length; i++)
                     {
+                        Console.Write($"Insira um número positivo {i+1}/10 no vetor: ");
+                        var input = Console.ReadLine();
                         try
                         {
-                            System.Console.WriteLine($"Insira um número positivo no vetor");
-                            double number = double.Parse(Console.ReadLine());
+                            double number = double.Parse(input);
                             if (number > 0)
                             {
                                 array[i] = number;
@@ -342,13 +338,15 @@ namespace Exercicios_arrays_2
                     System.Console.WriteLine("7. Popule um vetor A e imprima na tela o quantas vezes há um número residindo na mesma posição do vetor que seu valor numérico");
                     var arrayA = new int[10];
                     int indexCount = 0;
+                    var input = "";
 
                     for (int i = 0; i < 10; i++)
                     {
+                        Console.Write($"Insira o número {i+1}/10 no vetor: ");
+                        input = Console.ReadLine();
                         try
                         {
-                            Console.Write($"Insira o número {i+1}/10 no vetor: ");
-                            arrayA[i] = Int32.Parse(Console.ReadLine());
+                            arrayA[i] = Int32.Parse(input);
                             if (arrayA[i] == i)
                             {
                                 indexCount++;
@@ -420,13 +418,7 @@ namespace Exercicios_arrays_2
                     
                     System.Console.WriteLine($"\nA string reultante de letras em índices pares é {evenNuberIndexString}.\n");
                 }
-            }
             System.Console.WriteLine("*** APLICAÇÃO FINALIZADA ***\n");
-
-
-
-
-
         }
     }
 }
